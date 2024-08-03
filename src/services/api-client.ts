@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 export interface FetchResponse<T> {
-  [x: string]: any;
   count: number;
   next: string | null;
   results: T[];
@@ -10,7 +9,7 @@ export interface FetchResponse<T> {
 const axiosInstance = axios.create({
   baseURL: "https://api.rawg.io/api",
   params: {
-    key: "b5a662795b984284a3161e0800dd7b36",
+    key: "5518804fb72b4ddd9d8a54a4906dd0a0",
   },
 });
 
@@ -21,11 +20,17 @@ class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  getAll(_config: AxiosRequestConfig) {
+  getAll = (config: AxiosRequestConfig) => {
     return axiosInstance
-      .get<FetchResponse<T>>(this.endpoint)
+      .get<FetchResponse<T>>(this.endpoint, config)
       .then((res) => res.data);
-  }
+  };
+
+  get = (id: number | string) => {
+    return axiosInstance
+      .get<T>(this.endpoint + "/" + id)
+      .then((res) => res.data);
+  };
 }
 
 export default APIClient;
