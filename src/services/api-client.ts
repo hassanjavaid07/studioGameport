@@ -21,7 +21,7 @@ class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  getAll(config: AxiosRequestConfig) {
+  getAll(_config: AxiosRequestConfig) {
     return axiosInstance
       .get<FetchResponse<T>>(this.endpoint)
       .then((res) => res.data);
